@@ -6,18 +6,6 @@ Run with: streamlit run app.py
 
 import sys
 import streamlit as st
-
-try:
-    import matplotlib.pyplot as plt
-    import seaborn as sns
-    import xgboost
-    import shap
-    import sklearn
-except ImportError as e:
-    st.error(f"Missing package: {e}")
-    st.stop()
-
-import streamlit as st
 import pandas as pd
 import numpy as np
 import os
