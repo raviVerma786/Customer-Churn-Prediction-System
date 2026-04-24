@@ -62,7 +62,6 @@ st.markdown("""
     .stStatusWidget {visibility: hidden !important;}
     iframe[title="streamlit_analytics"] {display: none !important;}
     [data-testid="stToolbar"] {background-color: #36454F !important;}
-    .stApp {color: #888888;}
 </style>
 """, unsafe_allow_html=True)
 
