@@ -85,8 +85,8 @@ class ChurnPreprocessor(BaseEstimator, TransformerMixin):
 
     def fit(self, X: pd.DataFrame, y=None):
         df = X.copy()
-        df = self._encode_categoricals(df)
-        df = self._feature_engineer(df)
+        df = self._encode_categoricals(df)   # encode FIRST
+        df = self._feature_engineer(df)      # engineer AFTER
         num_cols = [c for c in self.NUMERICAL_COLS + ["ChargesPerMonth", "ServiceCount", "SupportCallRate"]
                     if c in df.columns]
         self.scaler.fit(df[num_cols])
@@ -97,8 +97,8 @@ class ChurnPreprocessor(BaseEstimator, TransformerMixin):
 
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         df = X.copy()
-        df = self._encode_categoricals(df)
-        df = self._feature_engineer(df)
+        df = self._encode_categoricals(df)   # encode FIRST
+        df = self._feature_engineer(df)      # engineer AFTER
         df[self.num_cols_] = self.scaler.transform(df[self.num_cols_])
         missing = [c for c in self.feature_cols_ if c not in df.columns]
         for col in missing:
