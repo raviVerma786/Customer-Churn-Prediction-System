@@ -52,9 +52,9 @@ st.set_page_config(
 )
 
 st.markdown("""
-<div style="position: fixed; top: 0.7rem; right: 1.5rem; z-index: 9999999;">
+<div style="position: fixed; top: 0.7rem; z-index: 9999999;text-align: center;left: 50%;transform: translateX(-50%);">
     <span style="font-size: 1.5rem;">📉</span>
-    <span style="font-size: 1.3rem; font-weight: 700; color: #4FC3F7;"> Churn Predictor</span>
+    <span style="font-size: 1.4rem; font-weight: 700; color: #4FC3F7;"> Churn Predictor</span>
 </div>
 """, unsafe_allow_html=True)
 
