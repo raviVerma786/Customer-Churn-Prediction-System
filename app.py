@@ -4,6 +4,19 @@ Streamlit dashboard for Customer Churn Prediction.
 Run with: streamlit run app.py
 """
 
+import sys
+import streamlit as st
+
+try:
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import xgboost
+    import shap
+    import sklearn
+except ImportError as e:
+    st.error(f"Missing package: {e}")
+    st.stop()
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -39,9 +52,9 @@ st.set_page_config(
 )
 
 st.markdown("""
-<div style="position: fixed; top: 8px; right: 10px; z-index: 9999999;">
-    <span style="font-size: 1.2rem;">📉</span>
-    <span style="font-size: 1rem; font-weight: 700; color: #4FC3F7;"> Churn Predictor</span>
+<div style="position: fixed; top: 0.7rem; right: 1.5rem; z-index: 9999999;">
+    <span style="font-size: 1.5rem;">📉</span>
+    <span style="font-size: 1.3rem; font-weight: 700; color: #4FC3F7;"> Churn Predictor</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -60,6 +73,7 @@ st.markdown("""
     [data-testid="stStatusWidget"] {visibility: hidden !important;}
     .stStatusWidget {visibility: hidden !important;}
     iframe[title="streamlit_analytics"] {display: none !important;}
+    [data-testid="stToolbar"] {background-color: #36454F !important;}
 </style>
 """, unsafe_allow_html=True)
 
