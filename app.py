@@ -22,8 +22,12 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 
 # Auto-train if models not found (for cloud deployment)
 if not os.path.exists(os.path.join(MODELS_DIR, "best_model.pkl")):
-    import subprocess
-    subprocess.run(["python", os.path.join(BASE_DIR, "src", "train.py")], check=True)
+    os.makedirs(MODELS_DIR, exist_ok=True)
+    os.makedirs(OUTPUTS_DIR, exist_ok=True)
+    os.makedirs(DATA_DIR, exist_ok=True)
+    sys.path.insert(0, os.path.join(BASE_DIR, "src"))
+    from train import train_and_evaluate
+    train_and_evaluate()
 
 sys.path.insert(0, os.path.join(BASE_DIR, "src"))
 
