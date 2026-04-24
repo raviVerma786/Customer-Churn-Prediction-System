@@ -14,6 +14,11 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Auto-train if models not found (for cloud deployment)
+if not os.path.exists(os.path.join(MODELS_DIR, "best_model.pkl")):
+    import subprocess
+    subprocess.run(["python", os.path.join(BASE_DIR, "src", "train.py")], check=True)
+
 # Always resolve paths relative to this file, regardless of where streamlit is run from
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
