@@ -105,7 +105,3 @@ This system enables proactive retention:
 `Python` · `XGBoost` · `scikit-learn` · `Pandas` · `SHAP` · `Streamlit` · `Matplotlib` · `pytest`
 
 ---
-
-## 👤 Author
-
-Built as a portfolio project for ML/AI engineering roles.
