@@ -62,6 +62,10 @@ class ChurnPreprocessor(BaseEstimator, TransformerMixin):
 
     def _feature_engineer(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
+        df["Tenure"] = df["Tenure"].astype(float)
+        df["TotalCharges"] = df["TotalCharges"].astype(float)
+        df["MonthlyCharges"] = df["MonthlyCharges"].astype(float)
+        df["NumSupportCalls"] = df["NumSupportCalls"].astype(float)
         df["ChargesPerMonth"] = df["TotalCharges"] / (df["Tenure"] + 1)
         df["HighValueCustomer"] = (df["MonthlyCharges"] > df["MonthlyCharges"].median()).astype(int)
         df["LongTenure"] = (df["Tenure"] > 24).astype(int)
