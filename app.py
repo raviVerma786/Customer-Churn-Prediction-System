@@ -34,6 +34,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown("""
+<div style="position: fixed; top: 8px; right: 10px; z-index: 9999999;">
+    <span style="font-size: 1.2rem;">📉</span>
+    <span style="font-size: 1rem; font-weight: 700; color: #4FC3F7;"> Churn Predictor</span>
+</div>
+""", unsafe_allow_html=True)
+
 # --- Styling ---
 st.markdown("""
 <style>
@@ -42,6 +49,13 @@ st.markdown("""
     .high-risk {color: #d32f2f; font-weight: bold;}
     .medium-risk {color: #f57c00; font-weight: bold;}
     .low-risk {color: #388e3c; font-weight: bold;}
+    [data-testid="stAppDeployButton"] {display: none !important;}
+    [data-testid="stMainMenu"] {display: none !important;}
+    # [data-testid="stStatusWidget"] {display: none !important;}
+    # last 3 are added to reduce clutter in frontend
+    [data-testid="stStatusWidget"] {visibility: hidden !important;}
+    .stStatusWidget {visibility: hidden !important;}
+    iframe[title="streamlit_analytics"] {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -70,8 +84,22 @@ def predict(model, preprocessor, customer_data: dict) -> dict:
 
 
 # --- Sidebar ---
-st.sidebar.markdown("## 📉 Churn Predictor")
-st.sidebar.markdown("Built with XGBoost + Streamlit")
+st.sidebar.markdown("""
+<div style="text-align: center; padding: 10px 0;">
+    <div style="font-size: 4rem;">📉</div>
+    <div style="font-size: 0.75rem; color: #888; letter-spacing: 2px; font-weight:bold; text-transform: capitalize;">Churn Predictor</div>
+</div>
+""", unsafe_allow_html=True)
+st.sidebar.markdown("---")
+
+st.markdown("""
+<style>
+    .stApp { background-color: #0e1117 !important; }
+    .stApp * {color: #ffffff !important; }
+    section[data-testid="stSidebar"] { background-color: #262730 !important; }
+</style>
+""", unsafe_allow_html=True)
+
 page = st.sidebar.radio("Navigate", ["🏠 Dashboard", "🔍 Single Prediction", "📊 Model Metrics"])
 
 model, preprocessor, results = load_artifacts()
@@ -81,7 +109,7 @@ model, preprocessor, results = load_artifacts()
 # ========================
 if page == "🏠 Dashboard":
     st.markdown('<p class="main-header">📉 Customer Churn Prediction Dashboard</p>', unsafe_allow_html=True)
-    st.markdown("Predict which telecom customers are likely to churn — and act before they leave.")
+    st.markdown("Predict which telecom customers are likely to churn, and act before they leave.")
 
     if model is None:
         st.warning("⚠️ Models not found. Please run `python src/train.py` first.")
