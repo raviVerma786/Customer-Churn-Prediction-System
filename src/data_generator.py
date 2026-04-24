@@ -109,6 +109,7 @@ def generate_churn_dataset(n_samples: int = 5000) -> pd.DataFrame:
 
 
 def save_data(df: pd.DataFrame, output_dir: str = "data/") -> None:
+    df = df.convert_dtypes(dtype_backend="numpy_nullable")
     os.makedirs(output_dir, exist_ok=True)
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["Churn"])
     train_df.to_csv(os.path.join(output_dir, "train.csv"), index=False)

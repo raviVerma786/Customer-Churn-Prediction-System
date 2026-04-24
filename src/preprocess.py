@@ -62,10 +62,12 @@ class ChurnPreprocessor(BaseEstimator, TransformerMixin):
 
     def _feature_engineer(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
-        df["Tenure"] = df["Tenure"].astype(float)
-        df["TotalCharges"] = df["TotalCharges"].astype(float)
-        df["MonthlyCharges"] = df["MonthlyCharges"].astype(float)
-        df["NumSupportCalls"] = df["NumSupportCalls"].astype(float)
+        # Convert all columns to numpy-backed dtypes (fixes Arrow backend issue on cloud)
+        df = df.convert_dtypes(dtype_backend="numpy_nullable")
+        df["Tenure"] = pd.to_numeric(df["Tenure"], errors="coerce").astype("float64")
+        df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce").astype("float64")
+        df["MonthlyCharges"] = pd.to_numeric(df["MonthlyCharges"], errors="coerce").astype("float64")
+        df["NumSupportCalls"] = pd.to_numeric(df["NumSupportCalls"], errors="coerce").astype("float64")
         df["ChargesPerMonth"] = df["TotalCharges"] / (df["Tenure"] + 1)
         df["HighValueCustomer"] = (df["MonthlyCharges"] > df["MonthlyCharges"].median()).astype(int)
         df["LongTenure"] = (df["Tenure"] > 24).astype(int)
